@@ -1,6 +1,7 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
+    <button v-on:click="refresh">Refresh</button>
     <p>
       For a guide and recipes on how to configure / customize this project,<br>
       check out the
@@ -31,10 +32,24 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   name: 'HelloWorld',
-  props: {
-    msg: String
+  data: function () {
+    return {
+      msg: '11111l'
+    }
+  },
+  methods: {
+    refresh: function() {
+      axios
+        .get('https://mffnsyy9e8.execute-api.us-west-2.amazonaws.com/Prod/hello')
+        .then(response => {
+          console.log(response);
+          (this.msg = response.data.message);
+        });
+    }
   }
 }
 </script>
